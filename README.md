@@ -1,5 +1,7 @@
 # High-Performance Image Processing with WebAssembly
 
+![Application Demo](web/assets/demo.png)
+
 A comparative analysis of CPU-intensive image processing filters implemented in both **Pure JavaScript** and **WebAssembly (C via Emscripten)**.
 
 ## 1. Introduction
@@ -8,7 +10,7 @@ This project demonstrates the performance advantages of WebAssembly (WASM) for c
 ## 2. Architecture Overview
 The application follows a layered architecture to separate UI concerns from heavy lifting:
 
-- **UI Layer (HTML5/CSS3)**: Minimalist, academic design for image interaction and result visualization.
+- **UI Layer (HTML5/CSS3)**: Minimalist design for image interaction and result visualization.
 - **Control Layer (JavaScript)**: Orchestrates image uploads, manages WASM memory lifecycle, and handles benchmarking logic.
 - **Computation Layer**: 
   - **JS Filters**: Baseline implementation using standard `ImageData` access.
@@ -26,8 +28,8 @@ The bridge between JavaScript and WebAssembly is handled via **Linear Memory**.
 - **Gaussian Blur**: 3x3 convolution kernel for localized smoothing.
 - **Sobel Edge Detection**: Gradient magnitude calculation using Gx and Gy kernels to identify high-contrast boundaries.
 
-## 4. Benchmarking Metrics (4000x3000 Resolution)
-The following results were captured on a high-resolution sample to demonstrate scaling performance. Each value represents the **average of 10 iterations** after JIT/WASM warmup.
+## 4. Performance Metrics (4000x3000 Resolution)
+The following results were captured on a high-resolution sample to demonstrate execution speed. Each value represents the **average of 10 iterations** after JIT/WASM warmup.
 
 | Filter | Resolution | JS Mean (ms) | WASM Mean (ms) | Speedup |
 | :--- | :--- | :--- | :--- | :--- |
@@ -49,9 +51,9 @@ Requires [Emscripten SDK](https://emscripten.org/).
 
 The build script uses `-O3` optimization to enable aggressive compiler optimizations, including loop unrolling and register allocation.
 
-## 6. Performance Hypotheses & Limitations
-### Hypothesis
-We expect WASM to outperform JS by **3x to 10x** in convolution-heavy tasks (Blur/Sobel) due to predictable memory access and lack of garbage collection pauses.
+## 6. Performance Characteristics & Limitations
+### Execution Estimates
+WASM is expected to outperform JS by **2x to 5x** in convolution-heavy tasks (Blur/Sobel) due to predictable memory access and lack of garbage collection pauses.
 
 ### Limitations
 - **Memory Bus Bottleneck**: Very large images may be capped by the speed of copying data between the JS heap and WASM memory.

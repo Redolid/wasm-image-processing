@@ -157,7 +157,7 @@ elements.btnBlur.addEventListener('click', () => runFilter('blur', { js: JSFilte
 elements.btnSobel.addEventListener('click', () => runFilter('sobel', { js: JSFilters.sobel }));
 
 /**
- * Rigorous Benchmarking
+ * Performance Testing
  */
 elements.btnBenchmark.addEventListener('click', async () => {
     elements.btnBenchmark.disabled = true;
