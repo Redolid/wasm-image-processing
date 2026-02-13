@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WASM vs JS | Image Processing Performance Analysis</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>High-Performance Image Processing</h1>
+            <p class="subtitle">A Comparative Analysis of JavaScript and WebAssembly (C)</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Control Panel -->
+        <section class="card controls">
+            <div class="upload-section">
+                <label for="imageUpload" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+                    </svg>
+                    Upload Image
+                </label>
+                <input type="file" id="imageUpload" accept="image/png, image/jpeg" style="display: none;">
+                <span id="fileName">No file selected</span>
+            </div>
+
+            <div class="filter-actions">
+                <button id="btnGrayscale" class="btn" disabled>Grayscale</button>
+                <button id="btnBlur" class="btn" disabled>Gaussian Blur</button>
+                <button id="btnSobel" class="btn" disabled>Sobel Edge</button>
+                <button id="btnBenchmark" class="btn btn-accent" disabled>Run Full Benchmark</button>
+            </div>
+        </section>
+
+        <!-- Comparison View -->
+        <section class="comparison-grid">
+            <div class="canvas-container card">
+                <h3>Original</h3>
+                <canvas id="canvasOriginal"></canvas>
+                <div class="stats invisible">Dimensions: <span id="imgSize">-</span></div>
+            </div>
+            <div class="canvas-container card">
+                <h3>JavaScript Implementation</h3>
+                <canvas id="canvasJS"></canvas>
+                <div class="stats js-stats">Execution: <span id="jsTime">-</span>ms</div>
+            </div>
+            <div class="canvas-container card">
+                <h3>WebAssembly (C)</h3>
+                <canvas id="canvasWasm"></canvas>
+                <div class="stats wasm-stats">Execution: <span id="wasmsTime">-</span>ms</div>
+            </div>
+        </section>
+
+        <!-- Benchmark Dashboard -->
+        <section class="card benchmark-dashboard">
+            <h2>Benchmarking Metrics</h2>
+            <div class="table-wrapper">
+                <table id="benchmarkTable">
+                    <thead>
+                        <tr>
+                            <th>Filter</th>
+                            <th>Resolution</th>
+                            <th>JS Mean (ms)</th>
+                            <th>WASM Mean (ms)</th>
+                            <th>Speedup</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Results will be injected here -->
+                        <tr>
+                            <td colspan="5" class="text-center">No data available. Run a benchmark to populate.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="dashboard-footer">
+                <p class="note">* Benchmarks represent the average of 10 iterations after initial JIT/WASM warmup.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="container">
+        <p>&copy; 2026 Academic Project | Master's in Computer Science</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // WASM Module Configuration
+        var Module = {
+            onRuntimeInitialized: function () {
+                console.log("WASM Runtime Initialized");
+                if (window.initWasm) window.initWasm(Module);
+            }
+        };
+    </script>
+    <script src="../wasm/filters.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
